@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Tabla usuarios
+model Company {
+  id String @id @default(uuid())
+  companyName String @unique
+  phoneCompany    String @default("") @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  superAdmin SuperAdmin? @relation(fields: [superAdminId], references: [id], onDelete: Cascade)
+  superAdminId String
+
+  addressCompany String
+  country String            
+  city String
+
+  rooms Room[]
+  users User[]
+  posts Post[]
+}
+
+model SuperAdmin {
+  id String @id @default(uuid())
+  name String 
+  surname String
+  phone    String @default("") @unique 
+  email String @db.VarChar(150) @unique
+  password String @db.VarChar(150)
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  role role    @default(SUPERADMIN)
+  posts Post[]
+  companies Company[]
+}
+
+model User {
+  id String @id @default(uuid())
+  userName String
+  surname String
+  phone    String @default("") @unique
+  email String @db.VarChar(150) @unique
+  password String @db.VarChar(150)
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  role role    @default(MAINTENANCE)
+  posts Post[]
+  company Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+}
+
+// Tabla Post Relacion 1:N
+model Post {                                    
+  id Int @id @default(autoincrement())
+  namePost String 
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+  author User? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorAdmin SuperAdmin? @relation(fields: [authorAdminId], references: [id], onDelete: SetNull)
+  room Room @relation(fields: [nameRoomId,companyId], references: [nameRoom, companyId], onDelete: Cascade)
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  authorId String?
+  authorAdminId String?
+  companyId String
+  authorName String?                         
+  nameRoomId String
+  solvedAt DateTime?
+  solvedById String?                          
+  solvedByName String?                          
+  postStatus postStatus @default(PENDING)  
+}
+
+// Tabla de habitaciones
+model Room {
+  id Int @id @default(autoincrement())
+  floor Int 
+  nameRoom String 
+  roomState RoomStatus @default(AVAILABLE)
+  description String
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  typeRoom TypeRoom
+  posts Post[]
+
+   @@unique([nameRoom, companyId], name: "unique_room_per_company")
+}
+
+enum role {
+  SUPERADMIN
+  RECEPTION
+  MAINTENANCE
+  CLEANING
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  BLOCKED
+}
+
+enum postStatus {
+  PENDING
+  DONE
+  URGENT
+  PROCESS
+}
+
+enum TypeRoom {  
+  BASIC
+  PREMIUM
+  SUITE
+}
+
+
+
