@@ -70,8 +70,6 @@ export class roomController {
 	static async getRoom(req = request, res = response) {
 		const { roomId, companyId } = req.params;
 
-		console.log(req.params);
-
 		try {
 			const company = await companyModel.getCompany('id', companyId);
 
@@ -83,8 +81,6 @@ export class roomController {
 			}
 
 			const room = await roomModel.getRoomFromCompany(companyId, roomId);
-
-			console.log({ room });
 
 			if (room.length < 1) {
 				return res.status(404).json({

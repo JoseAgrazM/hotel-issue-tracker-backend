@@ -193,8 +193,6 @@ export class userModel {
 	static async updatedAdmin(id, admin) {
 		const { name, surname, phone, role, email } = admin;
 
-		console.log(admin);
-
 		try {
 			return await prisma.superAdmin.update({
 				where: {

@@ -15,6 +15,8 @@ export class companyModel {
 	}
 
 	static async getCompany(column, value) {
+		if (!value) return false;
+
 		const whereCondition = { [column]: value };
 
 		try {
@@ -134,6 +136,37 @@ export class companyModel {
 		try {
 			return await prisma.company.delete({
 				where: { id: id },
+			});
+		} catch (error) {
+			throw new Error(
+				'Error al eliminar la empresa. Por favor, intente más tarde.'
+			);
+		}
+	}
+
+	static async editCompany(id, company) {
+		const {
+			companyName,
+			phoneCompany,
+			superAdminId,
+			addressCompany,
+			city,
+			country,
+		} = company;
+		try {
+			return await prisma.company.update({
+				where: {
+					id: id,
+				},
+				data: {
+					companyName,
+					phoneCompany,
+					superAdminId,
+					addressCompany,
+					city,
+					country,
+					updatedAt: new Date(),
+				},
 			});
 		} catch (error) {
 			throw new Error(

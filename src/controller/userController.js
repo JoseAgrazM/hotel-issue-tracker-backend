@@ -300,9 +300,10 @@ export class userController {
 			});
 		}
 	}
+
 	static async editAdmin(req, res) {
 		const { id } = req.params;
-		const { name, surname, email, role, companyId, phone } = req.body;
+		const { name, surname, email, role, phone } = req.body;
 
 		let updatedAdmin = { name, surname, email, role, phone };
 

@@ -28,12 +28,12 @@ companyRouter.post(
 	companyController.createCompany
 );
 
-// companyRouter.get('/', companyController.getAllCompanies);
-
 companyRouter.get('/:id', companyController.getCompanyId);
 
 companyRouter.get('/admin/:idAdmin', companyController.getCompaniesFromAdmin);
 
 companyRouter.delete('/:id', companyController.deleteCompany);
+
+companyRouter.patch('/edit-company/:id', companyController.editCompany);
 
 export default companyRouter;

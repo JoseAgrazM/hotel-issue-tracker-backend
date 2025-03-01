@@ -129,9 +129,11 @@ export class companyController {
 	}
 
 	static async deleteCompany(req = request, res = response) {
-		const id = req.params;
+		const { id } = req.params;
 
-		let company = companyModel.getCompany('id', id);
+		let company = await companyModel.getCompany('id', id);
+
+		console.log(company);
 
 		if (!company) {
 			return res.status(404).json({
@@ -140,12 +142,76 @@ export class companyController {
 			});
 		}
 
-		company = companyModel.deleteCompany(id);
+		company = await companyModel.deleteCompany(id);
 
 		res.status(200).json({
 			ok: true,
 			company,
 			msg: 'La empresa se elimino con exito.',
 		});
+	}
+
+	static async editCompany(req, res) {
+		const { id } = req.params;
+		const data = req.body;
+
+		const { companyName, superAdminId, phoneCompany } = data;
+
+		let updatedCompany = { companyName, superAdminId, phoneCompany };
+
+		try {
+			const company = await companyModel.getCompany('id', id);
+
+			if (!company) {
+				return res.status(404).json({
+					ok: false,
+					msg: 'No existe el usuario',
+				});
+			}
+
+			if (company.superAdminId !== superAdminId) {
+				return res.status(404).json({
+					ok: false,
+					msg: 'Este superadmin no es de esta empresa',
+				});
+			}
+
+			const existPhone = await companyModel.getCompany(
+				'phoneCompany',
+				phoneCompany
+			);
+
+			if (existPhone && existPhone.id !== id) {
+				return res.status(404).json({
+					ok: false,
+					msg: 'Este telefono ya existe',
+				});
+			}
+
+			const existName = await companyModel.getCompany(
+				'companyName',
+				companyName
+			);
+
+			if (existName && existName.id !== id) {
+				return res.status(404).json({
+					ok: false,
+					msg: 'Este nombre de empresa ya existe',
+				});
+			}
+
+			updatedCompany = await companyModel.editCompany(id, data);
+
+			res.status(200).json({
+				ok: true,
+				updatedCompany,
+				msg: 'Empresa actualizada con exito',
+			});
+		} catch (error) {
+			res.status(500).json({
+				ok: false,
+				msg: 'Error al editar el usuario, hable con el administrador',
+			});
+		}
 	}
 }

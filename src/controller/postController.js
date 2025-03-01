@@ -75,19 +75,6 @@ export class postController {
 		}
 	}
 
-	// static async getAllPost(req, res = response) {
-	// 	try {
-	// 		const allPost = await postModel.getAllPost();
-
-	// 		res.status(200).json({
-	// 			ok: true,
-	// 			allPost,
-	// 		});
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// }
-
 	static async getPostById(req = request, res = response) {
 		const { id } = req.params;
 
