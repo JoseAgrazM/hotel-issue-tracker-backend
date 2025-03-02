@@ -8,7 +8,7 @@ export const genJWT = (uid, name, role) => {
 			payload,
 			process.env.SECRET_JWT_WORD,
 			{
-				expiresIn: '1h',
+				expiresIn: '12h',
 			},
 			(err, token) => {
 				if (err) {

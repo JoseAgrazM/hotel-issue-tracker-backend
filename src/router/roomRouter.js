@@ -32,17 +32,17 @@ roomRouter.get('/:companyId/:roomId', roomController.getRoom); //* Get Room
 
 roomRouter.patch('/:id', roomController.updateRoom); //* Update Room patch little change
 
-roomRouter.put(
-	'/:id',
-	[
-		check('description', 'La descripción de la habitación es obligatoria'),
-		fieldsValidate,
-	],
-	roomController.updateRoom
-); //* Update Room PUT haciendo el cambio pasando todo el cuerpo
-
 roomRouter.delete('/:id', roomController.deleterRoom); //* Delete Room
 
 roomRouter.get('/:companyId', roomController.getRoomsFromCompany);
+
+// roomRouter.put(
+// 	'/:id',
+// 	[
+// 		check('description', 'La descripción de la habitación es obligatoria'),
+// 		fieldsValidate,
+// 	],
+// 	roomController.updateRoom
+// ); //* Update Room PUT haciendo el cambio pasando todo el cuerpo
 
 export default roomRouter;

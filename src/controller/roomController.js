@@ -102,8 +102,7 @@ export class roomController {
 	}
 
 	static async updateRoom(req = request, res = response) {
-		const header = req.params;
-		const data = req.body;
+		const { room } = req.body;
 
 		const states = {
 			AVAILABLE: 'AVAILABLE',
@@ -112,27 +111,35 @@ export class roomController {
 		};
 
 		try {
-			if (!Object.values(states).includes(data.roomState)) {
+			const existCompany = await companyModel.getCompany(
+				'id',
+				room.companyId
+			);
+
+			if (!existCompany) {
+				return res.status(404).json({
+					ok: false,
+					msg: 'La empresa no existe',
+				});
+			}
+
+			if (!Object.values(states).includes(room.roomState)) {
 				return res.status(400).json({
 					ok: false,
 					msg: 'El estado no es válido',
 				});
 			}
 
-			const room = await roomModel.getRoom('nameRoom', header.id);
+			const existRoom = await roomModel.getRoom('id', room.id);
 
-			if (!room || room.length < 1) {
+			if (!existRoom || existRoom.length < 1) {
 				return res.status(404).json({
 					ok: false,
 					msg: `La habitación no existe`,
 				});
 			}
 
-			const updatedRoom = await roomModel.updateRoom(
-				'nameRoom',
-				header.id,
-				data
-			);
+			const updatedRoom = await roomModel.updateRoom('id', room.id, room);
 
 			res.status(200).json({
 				ok: true,
@@ -176,7 +183,7 @@ export class roomController {
 		const { id } = req.params;
 
 		try {
-			let roomDelete = await roomModel.getRoom('nameRoom', id);
+			let roomDelete = await roomModel.getRoom('id', parseInt(id));
 
 			if (roomDelete.length < 1) {
 				return res.status(404).json({
@@ -185,7 +192,7 @@ export class roomController {
 				});
 			}
 
-			roomDelete = await roomModel.deleteRoom('nameRoom', id);
+			roomDelete = await roomModel.deleteRoom('id', parseInt(id));
 
 			res.status(200).json({
 				ok: true,
