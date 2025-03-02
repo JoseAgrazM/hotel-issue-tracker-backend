@@ -4,14 +4,10 @@ const prisma = new PrismaClient();
 
 export class roomModel {
 	static async createRooms(data) {
-		console.log(data);
-
 		try {
 			const newData = data.map(room => ({
 				...room,
 			}));
-
-			console.log(newData);
 
 			return await prisma.room.createMany({
 				data: newData,

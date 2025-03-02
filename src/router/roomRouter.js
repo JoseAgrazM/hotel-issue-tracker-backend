@@ -2,12 +2,13 @@
     Rutas de post
 */
 import { Router } from 'express';
-import { roomController } from '../controller/roomController.js';
-import { fieldsValidate } from '../middleware/fields-validate.js';
 import { check } from 'express-validator';
+import { roomController } from '../controller/roomController.js';
+import { fieldsValidate, validateJWT } from '../middleware/index.js';
 
 const roomRouter = Router();
-// roomRouter.get('/', roomController.getAllRooms); //* Get all Rooms
+
+roomRouter.use(validateJWT);
 
 roomRouter.post(
 	'/new',

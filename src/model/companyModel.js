@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 export class companyModel {
 	static async createCompany(data) {
 		try {
-			//todo: Crear compañia añadir el id del super admin si existe y si esta logeado, sino no se creará
 			return await prisma.company.create({
 				data: data,
 			});

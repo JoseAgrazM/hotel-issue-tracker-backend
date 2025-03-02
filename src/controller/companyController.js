@@ -133,8 +133,6 @@ export class companyController {
 
 		let company = await companyModel.getCompany('id', id);
 
-		console.log(company);
-
 		if (!company) {
 			return res.status(404).json({
 				ok: false,

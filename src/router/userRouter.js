@@ -4,8 +4,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { userController } from '../controller/userController.js';
-import { fieldsValidate } from '../middleware/fields-validate.js';
-import { validateJWT } from '../middleware/jwt-validate.js';
+import { fieldsValidate, validateJWT } from '../middleware/index.js';
 
 const userRouter = Router();
 
@@ -28,6 +27,23 @@ userRouter.post(
 	userController.createAdmin
 );
 
+//* Login user and Admin
+userRouter.post(
+	'/login',
+	[
+		check('email', 'El email es obligatorio').isEmail(),
+		check(
+			'password',
+			'El password es debe de ser de 6 caracteres'
+		).isLength({
+			min: 6,
+		}),
+	],
+	userController.loginUser
+);
+
+userRouter.use(validateJWT);
+
 //* Registro user
 userRouter.post(
 	'/new',
@@ -48,21 +64,6 @@ userRouter.post(
 		fieldsValidate,
 	],
 	userController.createUser
-);
-
-//* Login user and Admin
-userRouter.post(
-	'/login',
-	[
-		check('email', 'El email es obligatorio').isEmail(),
-		check(
-			'password',
-			'El password es debe de ser de 6 caracteres'
-		).isLength({
-			min: 6,
-		}),
-	],
-	userController.loginUser
 );
 
 userRouter.delete('/:id', userController.deleteUser);

@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { companyController } from '../controller/companyController.js';
-import { fieldsValidate } from '../middleware/fields-validate.js';
+import { fieldsValidate, validateJWT } from '../middleware/index.js';
 
 const companyRouter = Router();
+
+companyRouter.use(validateJWT);
 
 companyRouter.post(
 	'/new',

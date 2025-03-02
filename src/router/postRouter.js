@@ -2,13 +2,13 @@
     Rutas de post
 */
 import { Router } from 'express';
-import { postController } from '../controller/postController.js';
-import { fieldsValidate } from '../middleware/fields-validate.js';
 import { check } from 'express-validator';
+import { postController } from '../controller/postController.js';
+import { fieldsValidate, validateJWT } from '../middleware/index.js';
 
 const postRouter = Router();
 
-// postRouter.get('/', postController.getAllPost); // Select all
+postRouter.use(validateJWT);
 
 postRouter.get('/:id', postController.getPostById); // Select post from id
 
