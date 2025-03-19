@@ -22,7 +22,7 @@ export class userController {
 			if (user) {
 				return res.status(400).json({
 					ok: false,
-					msg: `El usuario ya existe`,
+					msg: `El usuario ya esta asociado a una empresa`,
 				});
 			}
 
@@ -30,7 +30,7 @@ export class userController {
 			if (existPhone) {
 				return res.status(400).json({
 					ok: false,
-					msg: `El numero de telefono ya existe`,
+					msg: `El numero de telefono ya esta asociado a un usuario`,
 				});
 			}
 

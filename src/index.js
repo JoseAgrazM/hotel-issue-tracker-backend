@@ -16,10 +16,10 @@ app.use(express.json());
 app.use(allCorsAccepted());
 
 // Rutas
-app.use('/api/auth', userRouter); //todo: Actualizar el perfil propio o si eres superAdmin
-app.use('/api/company', companyRouter); //* Check
-app.use('/api/room', roomRouter); //* Check
-app.use('/api/post', postRouter); //todo: Actualizar el post propio o si eres superAdmin
+app.use('/api/auth', userRouter);
+app.use('/api/company', companyRouter);
+app.use('/api/room', roomRouter);
+app.use('/api/post', postRouter);
 
 const port = process.env.PORT ?? 4000;
 

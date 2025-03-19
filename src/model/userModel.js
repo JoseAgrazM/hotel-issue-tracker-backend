@@ -156,11 +156,11 @@ export class userModel {
 		try {
 			const whereClausule = { [column]: value };
 
-			const users = await prisma.user.findMany({
+			return await prisma.user.findMany({
 				where: whereClausule,
 			});
 
-			return users;
+			
 		} catch (error) {
 			throw new Error('Error al recuperar el user:', error);
 		}
