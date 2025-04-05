@@ -61,7 +61,7 @@ model User {
   companyId String
 }
 
-// Tabla Post Relacion 1:N
+// Tabla Post
 model Post {                                    
   id Int @id @default(autoincrement())
   namePost String 

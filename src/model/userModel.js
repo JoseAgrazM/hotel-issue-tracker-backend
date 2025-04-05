@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 export class userModel {
 	static async createUser(data) {
-		// Hacer la peticion la insercion de datos en la BD
 		const { userName, surname, email, password, companyId, phone } = data;
 
 		try {
@@ -29,8 +28,6 @@ export class userModel {
 	}
 
 	static async createAdmin(data) {
-		// Hacer la peticion la insercion de datos en la BD
-
 		try {
 			const { name, surname, email, password, phone } = data;
 
@@ -159,8 +156,6 @@ export class userModel {
 			return await prisma.user.findMany({
 				where: whereClausule,
 			});
-
-			
 		} catch (error) {
 			throw new Error('Error al recuperar el user:', error);
 		}
