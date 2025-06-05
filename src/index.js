@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { allCorsAccepted } from './middleware/cors.js';
+import { allCorsAccepted, corsOptions } from './middleware/cors.js';
 import userRouter from './router/userRouter.js';
 import companyRouter from './router/companyRouter.js';
 import roomRouter from './router/roomRouter.js';
@@ -12,9 +12,7 @@ const app = express();
 app.disable('x-powered-by');
 app.use(express.json());
 
-// CORS
-// app.use(allCorsAccepted());
-app.use(cors());
+app.use(corsOptions());
 
 // Rutas
 app.use('/api/auth', userRouter);
