@@ -13,7 +13,8 @@ app.disable('x-powered-by');
 app.use(express.json());
 
 // CORS
-app.use(allCorsAccepted());
+// app.use(allCorsAccepted());
+app.use(cors());
 
 // Rutas
 app.use('/api/auth', userRouter);
