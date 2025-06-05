@@ -6,7 +6,7 @@ import companyRouter from './router/companyRouter.js';
 import roomRouter from './router/roomRouter.js';
 import postRouter from './router/postRouter.js';
 // import { sendEmail } from './lib/emails.plugin.js';
-import cors from 'cors';
+import { corsOptions } from './middleware/cors.js';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ const app = express();
 app.disable('x-powered-by');
 app.use(express.json());
 
-app.use(cors());
+app.use(corsOptions());
 
 // Rutas
 app.use('/api/auth', userRouter);
