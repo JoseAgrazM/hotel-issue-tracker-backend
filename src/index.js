@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-// import { allCorsAccepted, corsOptions } from './middleware/cors.js';
 import userRouter from './router/userRouter.js';
 import companyRouter from './router/companyRouter.js';
 import roomRouter from './router/roomRouter.js';
