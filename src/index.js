@@ -20,7 +20,7 @@ app.use('/api/company', companyRouter);
 app.use('/api/room', roomRouter);
 app.use('/api/post', postRouter);
 
-const port = process.env.PORT ?? 4000;
+const port = process.env.PORT ?? 3001;
 
 app.listen(port, async () => {
 	console.log(`Servidor corriendo en el puerto ${port}`);
