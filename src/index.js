@@ -1,11 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { allCorsAccepted, corsOptions } from './middleware/cors.js';
+// import { allCorsAccepted, corsOptions } from './middleware/cors.js';
 import userRouter from './router/userRouter.js';
 import companyRouter from './router/companyRouter.js';
 import roomRouter from './router/roomRouter.js';
 import postRouter from './router/postRouter.js';
-import { sendEmail } from './lib/emails.plugin.js';
+// import { sendEmail } from './lib/emails.plugin.js';
 import cors from 'cors';
 
 dotenv.config();
