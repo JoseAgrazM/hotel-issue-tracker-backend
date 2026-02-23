@@ -164,6 +164,7 @@ export class userController {
 				token,
 			});
 		} catch (error) {
+			console.error('createAdmin error:', error);
 			res.status(500).json({
 				ok: false,
 				msg: 'Error al crear el usuario, Hable con el administrador',
