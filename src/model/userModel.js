@@ -77,7 +77,8 @@ export class userModel {
 
 			return user;
 		} catch (error) {
-			throw new Error('Error al recuperar el user:', error);
+			console.error('Prisma getUserAndAdmin error:', error);
+			throw error;
 		}
 	}
 
